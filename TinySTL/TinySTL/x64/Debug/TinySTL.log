@@ -1,0 +1,16 @@
+﻿  main.cpp
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\main.cpp(25,1): error C2280:  'tinystl::Unique_ptr<H,tinystl::PtrDeleter<T>>::Unique_ptr(const tinystl::Unique_ptr<T,tinystl::PtrDeleter<T>> &)': attempting to reference a deleted function
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\main.cpp(25,1): error C2280:         with
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\main.cpp(25,1): error C2280:         [
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\main.cpp(25,1): error C2280:             T=H
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\main.cpp(25,1): error C2280:         ]
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26): message :  see declaration of 'tinystl::Unique_ptr<H,tinystl::PtrDeleter<T>>::Unique_ptr'
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26): message :         with
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26): message :         [
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26): message :             T=H
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26): message :         ]
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26,3): message :  'tinystl::Unique_ptr<H,tinystl::PtrDeleter<T>>::Unique_ptr(const tinystl::Unique_ptr<T,tinystl::PtrDeleter<T>> &)': function was explicitly deleted
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26,3): message :         with
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26,3): message :         [
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26,3): message :             T=H
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26,3): message :         ]

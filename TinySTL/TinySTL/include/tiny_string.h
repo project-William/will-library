@@ -4,36 +4,36 @@
 
 namespace tinystl {
 
-	class string {
+	class String {
 	private:
 		char* m_Buffer;
-		unsigned int m_Size;
+		size_t m_Size;
 	public:
-		string();
-		string(const char* other);
-		string(const string& other);
-		string(string&& other) noexcept;
+		String();
+		String(const char* other);
+		String(const String& other);
+		String(String&& other) noexcept;
 
-		string& operator=(const string& other);
-		string& operator=(string&& other) noexcept;
-		string& operator=(const char* other);
+		String& operator=(const String& other);
+		String& operator=(String&& other) noexcept;
+		String& operator=(const char* other);
 
 		char& operator[](unsigned int index);
 
 		inline char* getBuffer()const { return m_Buffer; }
-		~string();
+		~String();
 	};
 
 
-	string::string()
+	String::String()
 		:m_Buffer(NULL), m_Size(0)
 	{}
 
-	string::~string() {
+	String::~String() {
 		delete[] m_Buffer;
 	}
 
-	string::string(const char* other) {
+	String::String(const char* other) {
 		m_Buffer = nullptr;
 		m_Size = 0;
 		m_Size = strlen(other);
@@ -41,7 +41,7 @@ namespace tinystl {
 		memcpy(m_Buffer, other, m_Size + 1);
 	}
 
-	string::string(const string& other) {
+	String::String(const String& other) {
 		delete[] m_Buffer;
 		m_Size = 0;
 		m_Size = other.m_Size;
@@ -49,14 +49,14 @@ namespace tinystl {
 		memcpy(m_Buffer, other.m_Buffer, m_Size + 1);
 	}
 
-	string::string(string&& other) noexcept
+	String::String(String&& other) noexcept
 		:m_Buffer(other.m_Buffer), m_Size(other.m_Size)
 	{
 		other.m_Size = 0;
 		other.m_Buffer = nullptr;
 	}
 
-	string& string::operator=(const string& other) {
+	String& String::operator=(const String& other) {
 		delete[] m_Buffer;
 		m_Size = 0;
 		m_Size = other.m_Size;
@@ -65,7 +65,7 @@ namespace tinystl {
 		return *this;
 	}
 
-	string& string::operator=(string&& other) noexcept {
+	String& String::operator=(String&& other) noexcept {
 		m_Size = other.m_Size;
 		other.m_Size = 0;
 		m_Buffer = other.m_Buffer;
@@ -73,7 +73,7 @@ namespace tinystl {
 		return *this;
 	}
 
-	string& string::operator=(const char* other) {
+	String& String::operator=(const char* other) {
 		delete[] m_Buffer;
 		m_Size = 0;
 		m_Size = strlen(other);
@@ -82,7 +82,7 @@ namespace tinystl {
 		return *this;
 	}
 
-	char& string::operator[](unsigned int index) {
+	char& String::operator[](unsigned int index) {
 		return m_Buffer[index];
 	}
 

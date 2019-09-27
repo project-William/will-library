@@ -20,7 +20,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="tiny_string.h">
+    <ClInclude Include="include\tiny_string.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tiny_unique_ptr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
