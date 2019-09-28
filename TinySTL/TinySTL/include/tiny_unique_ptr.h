@@ -31,8 +31,8 @@ namespace tinystl
 		Deleter m_Deleter;
 		void Delete();
 	public:
-		void Reset(T* ptr);
-		T* GetPtr();
+		void reset(T* ptr);
+		T* getPtr();
 		T& operator*();
 		T* operator->();
 	};
@@ -59,13 +59,13 @@ namespace tinystl
 
 
 	template<class T,typename Deleter>
-	T* Unique_ptr<T, Deleter>::GetPtr()
+	T* Unique_ptr<T, Deleter>::getPtr()
 	{
 		return m_Ptr;
 	}
 
 	template<class T,typename Deleter>
-	void Unique_ptr<T, Deleter>::Reset(T* ptr)
+	void Unique_ptr<T, Deleter>::reset(T* ptr)
 	{
 		Delete();
 		m_Ptr = ptr;

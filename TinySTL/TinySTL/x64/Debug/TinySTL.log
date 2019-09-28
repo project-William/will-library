@@ -1,16 +1,26 @@
 ﻿  main.cpp
-E:\code\Common\william_TinySTL\TinySTL\TinySTL\main.cpp(25,1): error C2280:  'tinystl::Unique_ptr<H,tinystl::PtrDeleter<T>>::Unique_ptr(const tinystl::Unique_ptr<T,tinystl::PtrDeleter<T>> &)': attempting to reference a deleted function
-E:\code\Common\william_TinySTL\TinySTL\TinySTL\main.cpp(25,1): error C2280:         with
-E:\code\Common\william_TinySTL\TinySTL\TinySTL\main.cpp(25,1): error C2280:         [
-E:\code\Common\william_TinySTL\TinySTL\TinySTL\main.cpp(25,1): error C2280:             T=H
-E:\code\Common\william_TinySTL\TinySTL\TinySTL\main.cpp(25,1): error C2280:         ]
-E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26): message :  see declaration of 'tinystl::Unique_ptr<H,tinystl::PtrDeleter<T>>::Unique_ptr'
-E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26): message :         with
-E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26): message :         [
-E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26): message :             T=H
-E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26): message :         ]
-E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26,3): message :  'tinystl::Unique_ptr<H,tinystl::PtrDeleter<T>>::Unique_ptr(const tinystl::Unique_ptr<T,tinystl::PtrDeleter<T>> &)': function was explicitly deleted
-E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26,3): message :         with
-E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26,3): message :         [
-E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26,3): message :             T=H
-E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_unique_ptr.h(26,3): message :         ]
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(76,1): warning C4346:  'Iterator': dependent name is not a type
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(76,1): message :  prefix with 'typename' to indicate a type
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(76,1): error C2061:  syntax error: identifier 'Iterator'
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(77,2): error C2143:  syntax error: missing ';' before '{'
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(77,2): error C2447:  '{': missing function header (old-style formal list?)
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(100,1): warning C4346:  'Iterator': dependent name is not a type
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(100,1): message :  prefix with 'typename' to indicate a type
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(100,1): error C2061:  syntax error: identifier 'Iterator'
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(101,2): error C2143:  syntax error: missing ';' before '{'
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(101,2): error C2447:  '{': missing function header (old-style formal list?)
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(106,1): warning C4346:  'Iterator': dependent name is not a type
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(106,1): message :  prefix with 'typename' to indicate a type
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(106,1): error C2061:  syntax error: identifier 'Iterator'
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(107,2): error C2143:  syntax error: missing ';' before '{'
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(107,2): error C2447:  '{': missing function header (old-style formal list?)
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(112,1): warning C4346:  'Const_Iterator': dependent name is not a type
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(112,1): message :  prefix with 'typename' to indicate a type
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(112,1): error C2061:  syntax error: identifier 'Const_Iterator'
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(113,2): error C2143:  syntax error: missing ';' before '{'
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(113,2): error C2447:  '{': missing function header (old-style formal list?)
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(118,1): warning C4346:  'Const_Iterator': dependent name is not a type
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(118,1): message :  prefix with 'typename' to indicate a type
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(118,1): error C2061:  syntax error: identifier 'Const_Iterator'
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(119,2): error C2143:  syntax error: missing ';' before '{'
+E:\code\Common\william_TinySTL\TinySTL\TinySTL\include\tiny_vector.h(119,2): error C2447:  '{': missing function header (old-style formal list?)
