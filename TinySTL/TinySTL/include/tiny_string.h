@@ -1,11 +1,13 @@
 #pragma once
 #include <iostream>
-
+#include "tiny_allocator.h"
 
 namespace tinystl {
 
+
 	class String {
 	private:
+		Allocator<char> m_Allocator;
 		char* m_Buffer;
 		size_t m_Size;
 	public:
@@ -15,70 +17,67 @@ namespace tinystl {
 		String(String&& other) noexcept;
 
 		String& operator=(const String& other);
-		String& operator=(String&& other) noexcept;
 		String& operator=(const char* other);
-
+		String& operator=(String&& other) noexcept;
+		
 		char& operator[](unsigned int index);
 
 		inline char* getBuffer()const { return m_Buffer; }
+		inline size_t size()const { return m_Size; }
 		~String();
+
+		friend std::ostream& operator<<(std::ostream& os, const String& other);
+		
 	};
 
 
 	String::String()
-		:m_Buffer(NULL), m_Size(0)
-	{}
-
-	String::~String() {
-		delete[] m_Buffer;
+		:m_Buffer(m_Allocator.allocate(0)), m_Size(0)
+	{
 	}
 
-	String::String(const char* other) {
-		m_Buffer = nullptr;
-		m_Size = 0;
+	String::~String() {
+		m_Allocator.deallocate(m_Buffer);
+	}
+
+	String::String(const char* other) 
+	{
 		m_Size = strlen(other);
-		m_Buffer = new char[m_Size + 1];
+		m_Buffer = m_Allocator.allocate(m_Size + 1);
 		memcpy(m_Buffer, other, m_Size + 1);
 	}
 
 	String::String(const String& other) {
-		delete[] m_Buffer;
-		m_Size = 0;
+		m_Allocator.deallocate(m_Buffer);
 		m_Size = other.m_Size;
-		m_Buffer = new char[m_Size + 1];
+		m_Buffer = m_Allocator.allocate(m_Size + 1);
 		memcpy(m_Buffer, other.m_Buffer, m_Size + 1);
 	}
 
 	String::String(String&& other) noexcept
-		:m_Buffer(other.m_Buffer), m_Size(other.m_Size)
 	{
-		other.m_Size = 0;
-		other.m_Buffer = nullptr;
+		m_Buffer = other.getBuffer();
 	}
 
 	String& String::operator=(const String& other) {
-		delete[] m_Buffer;
-		m_Size = 0;
+		m_Allocator.deallocate(m_Buffer);
 		m_Size = other.m_Size;
-		m_Buffer = new char[m_Size + 1];
+		m_Buffer = m_Allocator.allocate(m_Size + 1);
 		memcpy(m_Buffer, other.m_Buffer, m_Size + 1);
 		return *this;
 	}
 
-	String& String::operator=(String&& other) noexcept {
-		m_Size = other.m_Size;
-		other.m_Size = 0;
-		m_Buffer = other.m_Buffer;
-		other.m_Buffer = nullptr;
+	String& String::operator=(const char* other) {
+		m_Allocator.deallocate(m_Buffer);
+		m_Size = strlen(other);
+		m_Buffer = m_Allocator.allocate(m_Size + 1);
+		memcpy(m_Buffer, other, m_Size + 1);
 		return *this;
 	}
 
-	String& String::operator=(const char* other) {
-		delete[] m_Buffer;
-		m_Size = 0;
-		m_Size = strlen(other);
-		m_Buffer = new char[m_Size + 1];
-		memcpy(m_Buffer, other, m_Size + 1);
+	String& String::operator=(String&& other) noexcept
+	{
+		m_Buffer = other.getBuffer();
 		return *this;
 	}
 
@@ -86,5 +85,10 @@ namespace tinystl {
 		return m_Buffer[index];
 	}
 
+	std::ostream& operator<<(std::ostream& os, const String& other)
+	{
+		os << other.getBuffer();
+		return os;
+	}
 }
 

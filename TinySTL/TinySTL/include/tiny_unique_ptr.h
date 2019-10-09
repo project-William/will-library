@@ -22,9 +22,10 @@ namespace tinystl
 	public:
 		Unique_ptr(T* ptr);
 		~Unique_ptr();
-	private:
 		Unique_ptr(const Unique_ptr<T>&) = delete;
+		Unique_ptr(const Unique_ptr<T>&&) = delete;
 		Unique_ptr& operator=(const Unique_ptr<T>&) = delete;
+		Unique_ptr& operator=(const Unique_ptr<T>&&) = delete;
 
 	private:
 		T* m_Ptr;

@@ -26,7 +26,7 @@
     <ClInclude Include="include\tiny_unique_ptr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\tiny_vector.h">
+    <ClInclude Include="include\tiny_allocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
