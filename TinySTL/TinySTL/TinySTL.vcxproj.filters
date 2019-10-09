@@ -29,5 +29,8 @@
     <ClInclude Include="include\tiny_allocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\tiny_iterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

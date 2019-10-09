@@ -130,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\tiny_allocator.h" />
+    <ClInclude Include="include\tiny_iterator.h" />
     <ClInclude Include="include\tiny_string.h" />
     <ClInclude Include="include\tiny_unique_ptr.h" />
   </ItemGroup>
