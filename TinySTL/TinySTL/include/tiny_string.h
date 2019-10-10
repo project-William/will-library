@@ -11,12 +11,11 @@ namespace tinystl {
 		Allocator<char> m_Allocator;
 		char* m_Buffer;
 		size_t m_Size;
-
+		
 	public:
-		static DefaultIterator<char> iterator;
-		static DefaultIterator<const char> const_iterator;
-		using Iterator = DefaultIterator<char>;
-		using Const_Iterator = DefaultIterator<const char>;
+		using iterator = DefaultIterator<char>;
+		using const_iterator = DefaultIterator<const char>;
+
 		String();
 		String(const char* other);
 		String(const String& other);
@@ -31,21 +30,22 @@ namespace tinystl {
 		inline char* getBuffer()const { return m_Buffer; }
 		inline size_t size()const { return m_Size; }
 
-		Iterator begin()
+		iterator begin()
 		{
 			return m_Buffer;
 		}
-		Iterator end()
+
+		iterator end()
 		{
 			return &m_Buffer[m_Size];
 		}
 
-		Const_Iterator cbegin() const
+		const_iterator cbegin() const
 		{
 			return m_Buffer;
 		}
 
-		Const_Iterator cend() const
+		const_iterator cend() const
 		{
 			return &m_Buffer[0];
 		}

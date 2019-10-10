@@ -37,16 +37,20 @@ namespace tinystl
 			return m_Iterator != other.m_Iterator;
 		}
 
-		T& operator*()
+		T& operator*() const
 		{
 			return *m_Iterator;
+		}
+
+		T* operator->()const
+		{
+			return &*m_Iterator;
 		}
 
 		~DefaultIterator() noexcept {};
 
 	private:
 		T* m_Iterator;
-
 	};
 
 	template<class T>
