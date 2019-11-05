@@ -35,5 +35,14 @@
     <ClInclude Include="include\tiny_vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\tiny_array.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\List.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tiny_list.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

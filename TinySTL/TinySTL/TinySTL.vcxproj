@@ -141,11 +141,14 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\List.h" />
     <ClInclude Include="include\tiny_allocator.h" />
     <ClInclude Include="include\tiny_iterator.h" />
+    <ClInclude Include="include\tiny_list.h" />
     <ClInclude Include="include\tiny_string.h" />
     <ClInclude Include="include\tiny_unique_ptr.h" />
     <ClInclude Include="include\tiny_vector.h" />
+    <ClInclude Include="include\tiny_array.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

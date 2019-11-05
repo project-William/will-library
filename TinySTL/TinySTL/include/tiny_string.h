@@ -111,9 +111,6 @@ namespace tinystl {
 		return m_Buffer[index];
 	}
 
-	
-
-
 	std::ostream& operator<<(std::ostream& os, const String& other)
 	{
 		os << other.getBuffer();
