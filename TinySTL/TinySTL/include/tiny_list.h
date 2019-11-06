@@ -71,5 +71,33 @@ namespace tinystl
 		}
 	}
 
+	template<class T,typename allocate>
+	List<T,allocate>::iterator List<T, allocate>::begin()
+	{
+		
+	}
+
+	
+	template<class T,typename allocate>
+	List<T,allocate>::iterator List<T, allocate>::end()
+	{
+
+	}
+	
+	template<class T,typename allocate>
+	List<T,allocate>::const_iterator List<T, allocate>::cbegin() const
+	{
+
+	}
+
+	
+	template<class T,typename allocate>
+	List<T,allocate>::const_iterator List<T, allocate>::cend() const
+	{
+
+	}
+
+
+
 
 }

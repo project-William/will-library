@@ -24,6 +24,7 @@ namespace tinystl
 		void push_back(T value);
 		void pop_back();
 		void reserve(size_t n);
+		void shrink_to_fit();
 
 		iterator begin() { return m_ValPtr; }
 		iterator end() { return &m_ValPtr[m_Size]; }
@@ -131,6 +132,12 @@ namespace tinystl
 		}
 		m_Alloc.deallocate(ptemp);
 		m_Capacity = newcapacity;
+	}
+
+	template<class T,typename allocate>
+	void Vector<T, allocate>::shrink_to_fit()
+	{
+		m_Capacity = m_Size;
 	}
 
 }
