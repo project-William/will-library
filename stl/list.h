@@ -114,7 +114,8 @@ namespace will
 		{
 			m_Head = m_Alloc.allocate(1);
 			m_Head->m_Data = elem;
-			m_Head->m_NextPtr = m_Head->m_PrevPtr = m_Tail = m_Head;
+			m_Head->m_NextPtr = m_Head->m_PrevPtr =nullptr;
+			m_Tail = m_Head;
 		}
 		else
 		{
@@ -123,15 +124,30 @@ namespace will
 			newListNode->m_Data = elem;
 			newListNode->m_PrevPtr = m_Tail;
 			m_Tail = newListNode;
-			m_Tail->m_NextPtr = m_Head;
-			m_Head->m_PrevPtr = m_Tail;
+			m_Tail->m_NextPtr = nullptr;
+			m_Head->m_PrevPtr = nullptr;
 		}
 	}
 
 	template<class T, typename allocate>
 	void List<T, allocate>::push_front(T elem)
 	{
-
+		ListNode<T>* newListNode = m_Alloc.allocate(1);
+		if (!m_Head)
+		{
+			newListNode->m_Data = elem;
+			m_Head = newListNode;
+			m_Tail = m_Head;
+			m_Head->m_NextPtr = m_Tail->m_NextPtr = nullptr;
+		}
+		else
+		{
+			newListNode->m_Data = elem;
+			newListNode->m_NextPtr = m_Head;
+			m_Head->m_PrevPtr = newListNode;
+			newListNode->m_PrevPtr = nullptr;
+			m_Head = newListNode;
+		}
 	}
 
 	template<class T, typename allocate>
