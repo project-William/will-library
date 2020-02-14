@@ -60,11 +60,10 @@ namespace will
 		using const_iterator = FwdListIterator<T>;
 
 
-		void push_back(const T ele);
-		void push_front(const T ele);
+		void push_back(const T& ele);
+		void push_front(const T& ele);
 		void pop_back();
 		void pop_front();
-		void insert(const T ele);
 
 		iterator begin() const { return m_Head; }
 		const_iterator cbegin()const { return m_Head; }
@@ -89,11 +88,20 @@ namespace will
 	template<class T, typename allocator>
 	Forward_List<T, allocator>::~Forward_List()
 	{
+		Node* ptr = m_Head;
+		Node* nodeToFree = m_Head;
+		while (ptr)
+		{
+			nodeToFree = ptr;
+			ptr = ptr->m_NextPtr;
+			m_Alloc.deallocate(nodeToFree);
 
+		}
+		m_Tail = m_Head = nullptr;
 	}
 
 	template<class T, typename allocator>
-	void Forward_List<T, allocator>::push_back(const T ele)
+	void Forward_List<T, allocator>::push_back(const T& ele)
 	{
 		if (!m_Head)
 		{
@@ -112,7 +120,7 @@ namespace will
 	}
 
 	template<class T,typename allocator>
-	void Forward_List<T, allocator>::push_front(const T ele)
+	void Forward_List<T, allocator>::push_front(const T& ele)
 	{
 		if (!m_Head)
 		{
@@ -159,7 +167,6 @@ namespace will
 			}
 			m_Alloc.deallocate(m_Tail);
 			m_Tail = tmp;
-			m_Tail->m_NextPtr = nullptr;
 		}
 	}
 
@@ -176,13 +183,6 @@ namespace will
 			m_Head = m_Head->m_NextPtr->m_NextPtr;
 			m_Alloc.deallocate(nodeToFree);
 		}
-	}
-
-
-	template<class T,typename allocator>
-	void Forward_List<T, allocator>::insert(const T ele)
-	{
-
 	}
 
 

@@ -46,7 +46,7 @@ namespace will
 
 		const_iterator cend() const
 		{
-			return &m_Buffer[0];
+			return &m_Buffer[m_Size];
 		}
 
 		~String();

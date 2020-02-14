@@ -75,8 +75,8 @@ namespace will
 		List();
 		~List();
 
-		void push_back(T elem);
-		void push_front(T elem);
+		void push_back(const T& elem);
+		void push_front(const T& elem);
 		void pop_back();
 		void pop_front();
 
@@ -85,8 +85,6 @@ namespace will
 		iterator end() { return nullptr; }
 		const_iterator cbegin()const { return m_Head; }
 		const_iterator cend()const { return m_Tail->m_NextPtr; }
-
-	
 
 	private:
 		ListNode<T>* m_Head;
@@ -104,10 +102,19 @@ namespace will
 	template<class T, typename allocate>
 	List<T, allocate>::~List()
 	{
+		ListNode<T>* ptr = m_Head;
+		ListNode<T>* nodeToFree = m_Head;
+		while (ptr)
+		{
+			nodeToFree = ptr;
+			ptr = ptr->m_NextPtr;
+			m_Alloc.deallocate(nodeToFree);
+		}
+		m_Tail = m_Head = nullptr;
 	}
 
 	template<class T, typename allocate>
-	void List<T, allocate>::push_back(T elem)
+	void List<T, allocate>::push_back(const T& elem)
 	{
 
 		if (m_Head == nullptr)
@@ -130,7 +137,7 @@ namespace will
 	}
 
 	template<class T, typename allocate>
-	void List<T, allocate>::push_front(T elem)
+	void List<T, allocate>::push_front(const T& elem)
 	{
 		ListNode<T>* newListNode = m_Alloc.allocate(1);
 		if (!m_Head)
@@ -153,13 +160,40 @@ namespace will
 	template<class T, typename allocate>
 	void List<T, allocate>::pop_back()
 	{
-
+		if (!m_Head)
+		{
+			throw std::exception("error! try to delete a nullptr");
+		}
+		else if (m_Head == m_Tail)
+		{
+			m_Alloc.deallocate(m_Head);
+		}
+		else
+		{
+			ListNode<T>* preTail = m_Tail->m_PrevPtr;
+			preTail->m_NextPtr = nullptr;
+			m_Alloc.deallocate(m_Tail);
+			m_Tail = preTail;
+		}
 	}
 	template<class T, typename allocate>
 	void List<T, allocate>::pop_front()
 	{
-
+		if (!m_Head)
+		{
+			throw std::exception("Error! Try to delete a nullptr");
+		}
+		else if (m_Head == m_Tail)
+		{
+			m_Alloc.deallocate(m_Head);
+		}
+		else
+		{
+			ListNode<T>* nodeToFree = m_Head;
+			m_Alloc.deallocate(nodeToFree);
+			m_Head = m_Head->m_NextPtr;
+			m_Head->m_PrevPtr = nullptr;
+		}
 	}
-
 
 }
