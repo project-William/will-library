@@ -1,5 +1,4 @@
 #pragma once
-#include "allocator.h"
 
 namespace will
 {
@@ -136,6 +135,84 @@ namespace will
 		return Pair<T, U>(first, second);
 	}
 
+	//binary functions less() equal_to()
+	template<class Arg1, class Arg2, class Result>
+	struct binary_function
+	{
+		typedef Arg1 first_arg_type;
+		typedef Arg2 second_arg_type;
+		typedef Result result_type;
+	};
 
+	template<class T>
+	struct less :public binary_function<T, T, bool>
+	{
+		result_type operator()(const first_arg_type& first, const second_arg_type& second)
+		{
+			return first < second;
+		}
+	};
+
+	template<class T>
+	struct equal_to :public binary_function<T, T, bool>
+	{
+		result_type operator()(const first_arg_type& first, const second_arg_type& second)
+		{
+			return first == second;
+		}
+	};
+
+
+	//hash function
+	//for general
+	template<class Key>
+	struct Hash {};
+
+	//template partial specialization for pointer
+	template<class T>
+	struct Hash<T*>
+	{
+		size_t operator()(T* ptr) const noexcept
+		{
+			return reinterpret_cast<size_t>(ptr);
+		}
+	};
+
+#define HASH_FUN(type) \
+template<>			   \
+struct Hash<type>      \
+{                      \
+	size_t operator()(type value) const noexcept\
+	{                  \
+        return static_cast<size_t>(value);\
+	}                  \
+};                     \
+	 
+
+HASH_FUN(bool)
+
+HASH_FUN(char)
+
+HASH_FUN(signed char)
+
+HASH_FUN(unsigned char)
+
+HASH_FUN(short)
+
+HASH_FUN(unsigned short)
+
+HASH_FUN(float)
+
+HASH_FUN(int)
+
+HASH_FUN(unsigned int)
+
+HASH_FUN(long)
+
+HASH_FUN(unsigned long)
+
+HASH_FUN(long long)	
+
+HASH_FUN(unsigned long long)
 
 }
