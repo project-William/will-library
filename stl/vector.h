@@ -1,6 +1,5 @@
 #pragma once
 #include "allocator.h"
-//#include "iterator.h"
 
 namespace will
 {
@@ -10,7 +9,7 @@ namespace will
 	public:
 		using iterator = T*;
 		using const_iterator = const T*;
-		Vector() :m_Size(0), m_Capacity(0), m_ValPtr(nullptr) {}
+		Vector() :m_Size(0), m_Capacity(1) { m_ValPtr = m_Alloc.allocate(1); }
 		Vector(size_t n, T value);
 		~Vector()noexcept;
 
@@ -26,10 +25,14 @@ namespace will
 		void reserve(size_t n);
 		void shrink_to_fit();
 
+		bool empty()const { return m_Size == 0; }
+
 		iterator begin() { return m_ValPtr; }
 		iterator end() { return &m_ValPtr[m_Size]; }
 		const_iterator cbegin()const { return m_ValPtr; }
 		const_iterator cend() const { return &m_ValPtr[m_Size]; }
+
+		T getLastValue()const { return m_ValPtr[m_Size - 1]; }
 
 	private:
 		T* m_ValPtr;
@@ -116,7 +119,7 @@ namespace will
 	template<class T, typename allocate>
 	void Vector<T, allocate>::pop_back()
 	{
-		m_ValPtr[m_Size] = NULL;
+		m_ValPtr[m_Size - 1] = NULL;
 		m_Size--;
 	}
 
