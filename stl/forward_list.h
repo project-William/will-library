@@ -64,12 +64,17 @@ namespace will
 		void push_front(const T& ele);
 		void pop_back();
 		void pop_front();
+		void delNodeByEle(const T& ele);
 
 		iterator begin() const { return m_Head; }
 		const_iterator cbegin()const { return m_Head; }
 
 		iterator end()const { return m_Tail->m_NextPtr; }
 		const_iterator cend()const { return m_Tail->m_NextPtr; }
+
+		iterator getLastNode()const { return m_Tail; }
+
+
 
 	private:
 		Node* m_Head;
@@ -95,7 +100,7 @@ namespace will
 			nodeToFree = ptr;
 			ptr = ptr->m_NextPtr;
 			m_Alloc.deallocate(nodeToFree);
-
+			nodeToFree = nullptr;
 		}
 		m_Tail = m_Head = nullptr;
 	}
@@ -117,6 +122,7 @@ namespace will
 			m_Tail->m_NextPtr = newNode;
 			m_Tail = newNode;
 		}
+		m_Tail->m_NextPtr = nullptr;
 	}
 
 	template<class T,typename allocator>
@@ -142,6 +148,7 @@ namespace will
 			}
 			m_Tail = tmp;
 		}
+		m_Tail->m_NextPtr = nullptr;
 	}
 
 
@@ -168,6 +175,7 @@ namespace will
 			m_Alloc.deallocate(m_Tail);
 			m_Tail = tmp;
 		}
+		m_Tail->m_NextPtr = nullptr;
 	}
 
 	template<class T,typename allocator>
@@ -180,11 +188,48 @@ namespace will
 		}
 		else
 		{
-			m_Head = m_Head->m_NextPtr->m_NextPtr;
+			m_Head = m_Head->m_NextPtr;
 			m_Alloc.deallocate(nodeToFree);
 		}
 	}
 
+
+	template<class T,typename allocator>
+	void Forward_List<T, allocator>::delNodeByEle(const T& ele)
+	{
+		Node* NodeToFree = m_Head;
+		Node* preNodeToFree = m_Head;
+		if (!m_Head)
+		{
+			throw std::exception("error! Empty forward list!");
+		}
+		else
+		{
+			if (ele == m_Head->elem)
+			{
+				pop_front();
+			}
+			else if (ele == m_Tail->elem)
+			{
+				pop_back();
+			}
+			else
+			{
+				while (preNodeToFree && preNodeToFree->m_NextPtr)
+				{
+					if (preNodeToFree->m_NextPtr->elem == ele)
+					{
+						NodeToFree = preNodeToFree->m_NextPtr;
+						preNodeToFree->m_NextPtr = NodeToFree->m_NextPtr;
+						m_Alloc.deallocate(NodeToFree);
+
+					}
+					else preNodeToFree = preNodeToFree->m_NextPtr;
+				}
+			}
+			
+		}
+	}
 
 }
 

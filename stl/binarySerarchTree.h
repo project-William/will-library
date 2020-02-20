@@ -37,7 +37,8 @@ namespace will
 		void KeyPreTraverse();
 		void KeyOrderTraverse();
 		void KeyPostTraverse();
-
+		BSTreeNode<T>* getMinmunKeyNode()const;
+		BSTreeNode<T>* getMaxmunKeyNode()const;
 
 		BSTreeNode<T>* getRootNode()const { return m_Root; }
 
@@ -159,68 +160,13 @@ namespace will
 	{
 		BSTreeNode<T>* ptr = m_Root;
 		BSTreeNode<T>* temp = ptr;
-		while (ptr)
-		{
-			if (key == ptr->m_Key)
-			{
-				//1st condition,no leftchild no right child
-				if (!ptr->m_LeftChild && !ptr->m_RightChild)
-				{
-					m_Alloc.deallocate(ptr);
-				}
-				//2nd condition no left child but has right child
-				else if (!ptr->m_LeftChild && ptr->m_RightChild)
-				{
-					temp = ptr;
-					ptr = ptr->m_RightChild;
-					m_Alloc.deallocate(temp);
-				}
-				//3nd condition has right child but no left child
-				else if (ptr->m_LeftChild && ptr->m_RightChild)
-				{
-					temp = ptr;
-					ptr = ptr->m_LeftChild;
-					m_Alloc.deallocate(temp);
-				}
-				else // has both left and right child
-				{
-					BSTreeNode<T>* temp_left_tree = ptr->m_LeftChild;
-					temp = ptr;
-					ptr = ptr->m_RightChild;
-					ptr->m_LeftChild = temp_left_tree;
-					m_Alloc.deallocate(temp);
-					while (temp_left_tree)
-					{
-						if (ptr->m_LeftChild->m_Key >= temp_left_tree->m_Key)
-						{
-							if (temp_left_tree->m_RightChild == nullptr)
-							{
-								temp_left_tree->m_RightChild = ptr->m_LeftChild;
-								break;
-							}
-							temp_left_tree = temp_left_tree->m_RightChild;
-						}
-						else
-						{
-							if (temp_left_tree->m_LeftChild == nullptr)
-							{
-								temp_left_tree->m_LeftChild = ptr->m_LeftChild;
-								break;
-							}
-							temp_left_tree = temp_left_tree->m_LeftChild;
-						}
+		
+		m_Alloc.deallocate(ptr);
 
-					}
-				}
-				return true;
-			}
-			else
-			{
-				if (key >= ptr->m_Key)
-					ptr = ptr->m_RightChild;
-				else ptr = ptr->m_LeftChild;
-			}
-		}
+
+
+
+		
 		return false;
 	}
 
@@ -257,6 +203,34 @@ namespace will
 		}
 		return 0;
 	}
+
+
+	template<class T, typename allocator>
+	BSTreeNode<T>* BSTree<T, allocator>::getMinmunKeyNode()const
+	{
+		BSTreeNode<T>* ptr = m_Root;
+		if (!m_Root)
+			return nullptr;
+		while(ptr->m_LeftChild)
+		{
+			ptr = ptr->m_LeftChild;
+		}
+		return ptr;
+	}
+
+	template<class T, typename allocator>
+	BSTreeNode<T>* BSTree<T, allocator>::getMaxmunKeyNode()const
+	{
+		BSTreeNode<T>* ptr = m_Root;
+		if (!m_Root)
+			return nullptr;
+		while (ptr->m_RightChild)
+		{
+			ptr = ptr->m_RightChild;
+		}
+		return ptr;
+	}
+
 
 	template<class T,typename allocator>
 	void BSTree<T, allocator>::KeyPreTraverseRecursive(BSTreeNode<T>* node)
