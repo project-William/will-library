@@ -86,6 +86,8 @@ namespace will
 		const_iterator cbegin()const { return m_Head; }
 		const_iterator cend()const { return m_Tail->m_NextPtr; }
 
+		void sort();
+
 	private:
 		ListNode<T>* m_Head;
 		ListNode<T>* m_Tail;
@@ -194,6 +196,12 @@ namespace will
 			m_Head = m_Head->m_NextPtr;
 			m_Head->m_PrevPtr = nullptr;
 		}
+	}
+
+	template<class T, typename allocate>
+	void List<T,allocate>::sort()
+	{
+
 	}
 
 }

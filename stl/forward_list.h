@@ -65,6 +65,9 @@ namespace will
 		void pop_back();
 		void pop_front();
 		void delNodeByEle(const T& ele);
+		void delNodeByIndex(size_t index);
+
+		void size()const { return m_Size; }
 
 		iterator begin() const { return m_Head; }
 		const_iterator cbegin()const { return m_Head; }
@@ -80,12 +83,13 @@ namespace will
 		Node* m_Head;
 		Node* m_Tail;
 		allocator m_Alloc;
+		size_t m_Size;
 	};
 
 
 	template<class T, typename allocator>
 	Forward_List<T, allocator>::Forward_List()
-		:m_Head(nullptr),m_Tail(nullptr)
+		:m_Head(nullptr),m_Tail(nullptr), m_Size(0)
 	{
 
 	}
@@ -123,6 +127,7 @@ namespace will
 			m_Tail = newNode;
 		}
 		m_Tail->m_NextPtr = nullptr;
+		m_Size++;
 	}
 
 	template<class T,typename allocator>
@@ -149,6 +154,7 @@ namespace will
 			m_Tail = tmp;
 		}
 		m_Tail->m_NextPtr = nullptr;
+		m_Size++;
 	}
 
 
@@ -176,6 +182,7 @@ namespace will
 			m_Tail = tmp;
 		}
 		m_Tail->m_NextPtr = nullptr;
+		m_Size--;
 	}
 
 	template<class T,typename allocator>
@@ -191,6 +198,7 @@ namespace will
 			m_Head = m_Head->m_NextPtr;
 			m_Alloc.deallocate(nodeToFree);
 		}
+		m_Size--;
 	}
 
 
@@ -229,6 +237,48 @@ namespace will
 			}
 			
 		}
+		m_Size--;
+	}
+
+	template<class T,typename allocator>
+	void Forward_List<T, allocator>::delNodeByIndex(size_t index)
+	{
+		if (index >= m_Size || index < 0)
+		{
+			throw std::exception("index is outlier");
+		}
+		else
+		{
+			if (!m_Head)
+				throw std::exception("empty forward list");
+			else
+			{
+				Node* preNodeToFree = m_Head;
+				if (index == 0)
+				{
+					Node* NodeToFree = m_Head;
+					m_Head = m_Head->m_NextPtr;
+					m_Alloc.deallocate(NodeToFree);
+				}
+				else
+				{
+					int i = 0;
+					while (preNodeToFree)
+					{
+						if (i == index - 1)
+							break;
+						i++;
+						preNodeToFree = preNodeToFree->m_NextPtr;
+					}
+					Node* NodeToFree = preNodeToFree->m_NextPtr;
+					if (NodeToFree == m_Tail)
+						m_Tail = preNodeToFree;
+					preNodeToFree->m_NextPtr = NodeToFree->m_NextPtr;
+					m_Alloc.deallocate(NodeToFree);
+				}
+			}
+		}
+		m_Size--;
 	}
 
 }

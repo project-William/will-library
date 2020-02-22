@@ -34,12 +34,15 @@ namespace will
 		void KeyOrderTraverseRecursive(BSTreeNode<T>* node);
 		void KeyPostTraverseRecursive(BSTreeNode<T>* node);
 
-		void KeyPreTraverse();
-		void KeyOrderTraverse();
-		void KeyPostTraverse();
+		void KeyPreTraverse() const;
+		void KeyOrderTraverse() const;
+		void KeyPostTraverse() const;
+		void levelOrderTraverse() const;
+
+		void size()const { return m_Size; }
+
 		BSTreeNode<T>* getMinmunKeyNode()const;
 		BSTreeNode<T>* getMaxmunKeyNode()const;
-
 		BSTreeNode<T>* getRootNode()const { return m_Root; }
 
 
@@ -158,15 +161,28 @@ namespace will
 	template<class T,typename allocator>
 	bool BSTree<T, allocator>::delNode(size_t key)
 	{
-		BSTreeNode<T>* ptr = m_Root;
-		BSTreeNode<T>* temp = ptr;
+		BSTreeNode<T>* preNodeToFree = m_Root;
+		BSTreeNode<T>* NodeToFree = preNodeToFree;
 		
-		m_Alloc.deallocate(ptr);
+		if (key == m_Root->m_Key)
+		{
+			if (m_Size == 1)
+				m_Alloc.deallocate(m_Root);
+			else if (m_Root->m_RightChild && m_Root->m_LeftChild)
+			{
 
+			}
+			else if (!m_Root->m_RightChild && m_Root->m_LeftChild)
+			{
 
+			}
+			else if (m_Root->m_RightChild && !m_Root->m_LeftChild)
+			{
 
+			}
+		}
 
-		
+		m_Size--;
 		return false;
 	}
 
@@ -266,7 +282,7 @@ namespace will
 	}
 
 	template<class T, typename allocator>
-	void BSTree<T, allocator>::KeyPreTraverse()
+	void BSTree<T, allocator>::KeyPreTraverse() const
 	{
 		Vector<BSTreeNode<T>*> nodeVec;
 		BSTreeNode<T>* ptr = m_Root;
@@ -301,7 +317,7 @@ namespace will
 	}
 
 	template<class T, typename allocator>
-	void BSTree<T, allocator>::KeyOrderTraverse()
+	void BSTree<T, allocator>::KeyOrderTraverse() const
 	{
 		Vector<BSTreeNode<T>*> nodeVec;
 		BSTreeNode<T>* ptr = m_Root;
@@ -333,7 +349,7 @@ namespace will
 	}
 
 	template<class T, typename allocator>
-	void BSTree<T, allocator>::KeyPostTraverse()
+	void BSTree<T, allocator>::KeyPostTraverse() const
 	{
 		Vector<BSTreeNode<T>*> nodeVec;
 
@@ -373,5 +389,12 @@ namespace will
 				}
 			}
 		}
+	}
+
+
+	template<class T,typename allocator>
+	void BSTree<T, allocator>::levelOrderTraverse() const
+	{
+
 	}
 }
