@@ -38,8 +38,11 @@ namespace will
 
 		void mapSize()const { return m_MapSize; }
 		size_t size()const { ; }
-	private:
 
+		
+
+	private:
+		iterator m_HelpIter;
 		T** m_Map;
 		
 		size_t m_MapSize;
@@ -48,9 +51,12 @@ namespace will
 
 	template<class T,typename valAlloc,typename ptrAlloc>
 	Deque<T, valAlloc, ptrAlloc>::Deque()
-		:m_Map(nullptr),m_MapSize(0),m_BufferSize(0)
+		:m_Map(nullptr),m_MapSize(1),m_BufferSize(0)
 	{
-
+		m_Map = ptrAlloc.allocate(1);
+		m_BufferSize = sizeof(T) > 512 ? 1 : 512 / sizeof(T);
+		m_HelpIter.node = m_Map;
+		
 	}
 	
 	template<class T,typename valAlloc,typename ptrAlloc>
@@ -62,16 +68,13 @@ namespace will
 	template<class T, typename valAlloc, typename ptrAlloc>
 	void Deque<T, valAlloc, ptrAlloc>::push_back(const T& ele)
 	{
-		if (m_BufferSize == 0)
-		{
-			m_Map = ptrAlloc.allocate(1);
-		}
+		
 	}
 
 	template<class T, typename valAlloc, typename ptrAlloc>
 	void Deque<T, valAlloc, ptrAlloc>::push_front(const T& ele)
 	{
-
+		
 	}
 
 	template<class T, typename valAlloc, typename ptrAlloc>
