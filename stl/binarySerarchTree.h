@@ -35,9 +35,11 @@ namespace will
 		void KeyPostTraverseRecursive(BSTreeNode<T>* node);
 
 		void KeyPreTraverse() const;
+		void KeyPreTraverse1()const;
 		void KeyOrderTraverse() const;
 		void KeyPostTraverse() const;
 		void levelOrderTraverse() const;
+
 
 		void size()const { return m_Size; }
 
