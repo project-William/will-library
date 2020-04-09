@@ -3,146 +3,59 @@
 
 namespace will
 {
+#define EXCEPT(c,ch) do {assert(*c->json==(ch));c->json++;} while(0)
 
-#define EXCEPT(c,ch) do {assert(*c->json==(ch));c->json++;}while(0)
-
-	JsonParser JsonParser::s_Instance;
-	
-	JsonParser::JsonParser()
+	struct TokenContext
 	{
+		const char* json;
+	};
 
-	}
-	
-	JsonParser::~JsonParser()
+	void tokenParseWhiteSpace(TokenContext* c)
 	{
-
-	}
-
-	JsonParser& JsonParser::Get()
-	{
-		return s_Instance;
-	}
-
-
-	int JsonParser::TokenParser(TokenValue* value, const std::string& json)
-	{
-		JsonParser::JsonContext context;
-		const char* c = json.c_str();
-		int res;
-		assert(value != nullptr);
-		context.json = json;
-		value->type = DataToken::TOKEN_NULL;
-		TokenParseWhiteSpace(&context);
-		if ((res = TokenParseValue(&context, value)) == JsonParser::TOKEN_PARSE_OK)
+		const char* ptr = c->json;
+		while (*ptr ==' ' ||*ptr=='\n' || *ptr == '\r'|| * ptr == '\t')
 		{
-			TokenParseWhiteSpace(&context);
-			if (*c != '\0')
-				res = TOKEN_PARSE_ROOT_NOT_SINGULAR;
+			ptr++;
 		}
-		return res;
+		c->json = ptr;
 	}
 
-	JsonParser::DataToken JsonParser::GetType(const JsonParser::TokenValue* value)
+	int tokenParseNull(TokenContext* c, TokenValue* v)
 	{
-
-	}
-
-	void JsonParser::TokenParseWhiteSpace(JsonParser::JsonContext* context)
-	{
-		const char* c = context->json.c_str();
-		while (*c == ' ' || *c == '\t' || *c == '\n' || *c == '\r')
+		EXCEPT(c, 'n');
+		if (c->json[0] != 'u' || c->json[1] != 'l' || c->json[2] != 'l')
 		{
-			c++;
+			return LEPT_PARSE_INVALID_VALUE;
 		}
-		context->json = c;
+		c->json += 3;
+		v->type = LEPT_NULL;
+		return LEPT_PARSE_OK;
 	}
 
-	int JsonParser::TokenParseValue(JsonContext* context, TokenValue* value)
+	int tokenParseValue(TokenContext* c, TokenValue* v)
 	{
-		std::string::iterator strPtr = context->json.begin();
-
-		switch (*strPtr)
+		switch (*c->json)
 		{
-		case 'n':return TokenParseLiteral(context, value, "null", JsonParser::DataToken::TOKEN_NULL);
-		case 't':return TokenParseLiteral(context, value, "true", JsonParser::DataToken::TOKEN_FALSE);
-		case 'f':return TokenParseLiteral(context, value, "false", JsonParser::DataToken::TOKEN_TRUE);
-		case '\0':return JsonParser::TOKEN_PARSE_EXCEPT_VALUE;
-		default:return TokenParseNumber(context, value);
+		case 'n': return tokenParseNull(c, v);
+		case '\0': return LEPT_PARSE_EXPECT_VALUE;
+		default:   return LEPT_PARSE_INVALID_VALUE;
 		}
 	}
 
-	int JsonParser::TokenParseNULL(JsonContext* context, TokenValue* value)
+
+	int tokenParse(TokenValue* v, const char* json)
 	{
-		const char* c = context->json.c_str();
-		assert(*c == 'n');
-		c++;
-		if (c[0] != 'u' || c[1] != 'l' || c[2] != 'l')
-			return JsonParser::TOKEN_PARSE_INVALID_VALUE;
-		c += 3;
-		value->type = JsonParser::DataToken::TOKEN_NULL;
-		return TOKEN_PARSE_OK;
+		TokenContext c;
+		c.json = json;
+		v->type = LEPT_NULL;
+		tokenParseWhiteSpace(&c);
+		return tokenParseValue(&c, v);
 	}
 
-	int JsonParser::TokenParseTRUE(JsonContext* context, TokenValue* value)
+	tokenType tokenGetType(const TokenValue* v)
 	{
-		const char* c = context->json.c_str();
-		assert(*c == 't');
-		c++;
-		if (c[0] != 't' || c[1] != 'r' || c[2] != 'u' || c[3] != 'e')
-			return JsonParser::TOKEN_PARSE_INVALID_VALUE;
-		c += 4;
-		value->type = JsonParser::DataToken::TOKEN_TRUE;
-		return TOKEN_PARSE_OK;
-	}
-
-	int JsonParser::TokenParseFALSE(JsonContext* context, TokenValue* value)
-	{
-		const char* c = context->json.c_str();
-		assert(*c == 'f');
-		c++;
-		if (c[0] != 'f' || c[1] != 'a' || c[2] != 'l' || c[3] != 's' || c[4] != 'e')
-			return JsonParser::TOKEN_PARSE_INVALID_VALUE;
-		c += 5;
-		value->type = JsonParser::DataToken::TOKEN_FALSE;
-		return TOKEN_PARSE_OK;
-	}
-
-	int JsonParser::TokenParseNumber(JsonContext* context, TokenValue* value)
-	{
-		const char* p = context->json.c_str();
-		char* end;
-		value->number = strtod(context->json.c_str(), &end);
-		if (p == end)
-		{
-			return JsonParser::TOKEN_PARSE_INVALID_VALUE;
-		}
-		p = end;
-		value->type = JsonParser::DataToken::TOKEN_NUMBER;
-		return JsonParser::TOKEN_PARSE_OK;
-	}
-
-	int JsonParser::TokenParseLiteral(JsonContext* context, TokenValue* value, const char* literal, DataToken type)
-	{
-		size_t i;
-		const char* c = context->json.c_str();
-		assert(*c == literal[0]);
-		c++;
-		for (i = 0; literal[i + 1]; i++)
-		{
-			if (c[i] != literal[i + 1])
-			{
-				return JsonParser::TOKEN_PARSE_INVALID_VALUE;
-			}
-		}
-		c += i;
-		value->type = type;
-		return JsonParser::TOKEN_PARSE_OK;
-	}
-
-	double JsonParser::TokenGetNumber(const TokenValue* value)
-	{
-		assert(value != nullptr && value->type == JsonParser::DataToken::TOKEN_NUMBER);
-		return value->number;
+		assert(v != nullptr);
+		return v->type;
 	}
 
 

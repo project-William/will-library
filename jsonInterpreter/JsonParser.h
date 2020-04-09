@@ -1,62 +1,29 @@
 #pragma once
 #include <iostream>
-
+#include <stdio.h>
+#include <stdlib.h>
 
 namespace will
 {
-	class JsonParser
+	typedef enum
 	{
-	public:
-		enum class DataToken
-		{
-			TOKEN_NULL,
-			TOKEN_FALSE,
-			TOKEN_TRUE,
-			TOKEN_NUMBER,
-			TOKEN_STRING,
-			TOKEN_ARRAY,
-			TOKEN_OBJECT
-		};
+		LEPT_NULL, LEPT_FALSE, LEPT_TRUE, LEPT_NUMBER, LEPT_STRING, LEPT_ARRAY, LEPT_OBJECT
+	}tokenType;
 
-		struct TokenValue
-		{
-			double number;
-			DataToken type;
-		};
-
-		struct JsonContext
-		{
-			std::string json;
-		};
-
-		enum
-		{
-			TOKEN_PARSE_OK = 0,
-			TOKEN_PARSE_EXCEPT_VALUE,
-			TOKEN_PARSE_INVALID_VALUE,
-			TOKEN_PARSE_ROOT_NOT_SINGULAR
-		};
-		
-		~JsonParser();
-
-		int TokenParser(TokenValue* value, const std::string& json);
-		DataToken GetType(const TokenValue* value);
-		void TokenParseWhiteSpace(JsonContext* context);
-		int TokenParseValue(JsonContext* context, TokenValue* value);
-		int TokenParseNULL(JsonContext* context, TokenValue* value);
-		int TokenParseTRUE(JsonContext* context, TokenValue* value);
-		int TokenParseFALSE(JsonContext* context, TokenValue* value);
-		int TokenParseNumber(JsonContext* context, TokenValue* value);
-		int TokenParseLiteral(JsonContext* context, TokenValue* value, const char* literal, DataToken type);
-		
-		double TokenGetNumber(const TokenValue* value);
-
-
-
-		static JsonParser s_Instance;
-		static JsonParser& Get();
-	private:
-		TokenValue m_DataToken;
-		JsonParser();
+	struct TokenValue
+	{
+		tokenType type;
 	};
+
+	enum {
+		LEPT_PARSE_OK = 0,
+		LEPT_PARSE_EXPECT_VALUE,
+		LEPT_PARSE_INVALID_VALUE,
+		LEPT_PARSE_ROOT_NOT_SINGULAR
+	};
+
+	int tokenParse(TokenValue* v, const char* json);
+	tokenType tokenGetType(const TokenValue* v);
+
+
 }
