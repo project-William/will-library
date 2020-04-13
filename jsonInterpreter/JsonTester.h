@@ -30,6 +30,21 @@ namespace will
         EXPECT_EQ_INT(LEPT_NULL, tokenGetType(&v));
 	}
 
+    void testTrue()
+    {
+        TokenValue v;
+        v.type = LEPT_TRUE;
+        EXPECT_EQ_INT(LEPT_PARSE_OK, tokenParse(&v, "true"));
+        EXPECT_EQ_INT(LEPT_TRUE, tokenGetType(&v));
+    }
+
+    void testFalse()
+    {
+        TokenValue v;
+        v.type = LEPT_FALSE;
+        EXPECT_EQ_INT(LEPT_PARSE_OK, tokenParse(&v, "false"));
+        EXPECT_EQ_INT(LEPT_FALSE, tokenGetType(&v));
+    }
 
     void testParseExpectValue()
     {
@@ -65,6 +80,8 @@ namespace will
 
     void testParse() {
         testNull();
+        testFalse();
+        testTrue();
         testParseExpectValue();
         testParseExpectValue();
         testParseRootNotSingular();
