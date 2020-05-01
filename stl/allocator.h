@@ -4,7 +4,7 @@
 #include <new>	
 #include <memory>
 
-namespace will
+namespace will::tinySTL
 {
 	template<class T>
 	struct Allocator

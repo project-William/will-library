@@ -12,8 +12,12 @@ namespace will
 
 	struct TokenValue
 	{
+		double n;
 		tokenType type;
 	};
+
+
+
 
 	enum {
 		LEPT_PARSE_OK = 0,
@@ -24,6 +28,6 @@ namespace will
 
 	int tokenParse(TokenValue* v, const char* json);
 	tokenType tokenGetType(const TokenValue* v);
-
+	double tokenGetNumber(const TokenValue* v);
 
 }

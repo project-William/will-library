@@ -3,7 +3,7 @@
 #include "utility.h"
 #include "vector.h"
 
-namespace will
+namespace will::tinySTL
 {
 	template<class T>
 	struct BSTreeNode

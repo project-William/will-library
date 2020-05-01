@@ -1,6 +1,6 @@
 #pragma once
 
-namespace will
+namespace will::tinySTL
 {
 	//binary functions less() equal_to()
 	template<class Arg1, class Arg2, class Result>

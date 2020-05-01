@@ -1,0 +1,6 @@
+
+
+namespace will::math
+{
+
+}

@@ -56,6 +56,21 @@ namespace will
 		return LEPT_PARSE_OK;
 	}
 
+	int tokenParseNumber(TokenContext* c, TokenValue* v)
+	{
+		char* end;
+
+		v->n = strtod(c->json, &end);
+		if (c->json == end)
+		{
+			return LEPT_PARSE_INVALID_VALUE;
+		}
+		c->json = end;
+		v->type = LEPT_NUMBER;
+		return LEPT_PARSE_OK;
+	}
+
+
 	int tokenParseValue(TokenContext* c, TokenValue* v)
 	{
 		switch (*c->json)
@@ -64,7 +79,7 @@ namespace will
 		case 't':return tokenParseTrue(c, v);
 		case 'f':return tokenParseFalse(c, v);
 		case '\0': return LEPT_PARSE_EXPECT_VALUE;
-		default:   return LEPT_PARSE_INVALID_VALUE;
+		default:   return tokenParseNumber(c, v);
 		}
 	}
 
@@ -91,6 +106,13 @@ namespace will
 	{
 		assert(v != nullptr);
 		return v->type;
+	}
+
+
+	double tokenGetNumber(const TokenValue* v)
+	{
+		assert(v != nullptr && v->type == LEPT_NUMBER);
+		return v->n;
 	}
 
 

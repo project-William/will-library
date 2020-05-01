@@ -1,6 +1,6 @@
 #pragma once
 
-namespace will
+namespace will::tinySTL
 {
 	/*swap*/
 	template<typename T>

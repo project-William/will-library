@@ -2,7 +2,7 @@
 #include <iostream>
 #include "allocator.h"
 
-namespace will 
+namespace will::tinySTL
 {
 
 	class String {

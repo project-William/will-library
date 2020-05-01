@@ -1,7 +1,7 @@
 #pragma once
 #include "allocator.h"
 
-namespace will
+namespace will::tinySTL
 {
 	template<class T,typename allocator=Allocator<T>>
 	class Shared_ptr

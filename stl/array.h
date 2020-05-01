@@ -1,6 +1,6 @@
 #pragma once
 
-namespace will
+namespace will::tinySTL
 {
 	template<class T,size_t N>
 	class Array
